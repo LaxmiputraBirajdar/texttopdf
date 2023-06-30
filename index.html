@@ -2,10 +2,49 @@
 <html>
 <head>
   <title>Text to PDF Converter</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .file-input {
+      margin-bottom: 10px;
+    }
+    
+    .convert-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    /* Mobile-friendly styles */
+    @media only screen and (max-width: 600px) {
+      .container {
+        max-width: 100%;
+        padding: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <input type="file" id="fileInput" multiple>
-  <button onclick="convertToPDF()">Convert to PDF</button>
+    <div class="container">
+        <h1>Text to PDF Converter</h1>
+        <input type="file" id="fileInput" class="file-input" multiple>
+        <button onclick="convertToPDF()" class="convert-btn">Convert to PDF</button>
+      </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
