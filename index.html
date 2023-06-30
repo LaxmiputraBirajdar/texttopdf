@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Text to PDF Converter</title>
+</head>
+<body>
+  <input type="file" id="fileInput" multiple>
+  <button onclick="convertToPDF()">Convert to PDF</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
+  <script>
+    function convertToPDF() {
+      const fileInput = document.getElementById('fileInput');
+      const files = fileInput.files;
+
+      if (files.length > 0) {
+        const pdfDoc = { content: [] };
+
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const reader = new FileReader();
+
+          reader.onload = function(event) {
+            const text = event.target.result;
+            pdfDoc.content.push(text);
+
+            if (pdfDoc.content.length === files.length) {
+              generatePDF(pdfDoc);
+            }
+          };
+
+          reader.readAsText(file);
+        }
+      }
+    }
+
+    function generatePDF(pdfDoc) {
+      pdfMake.createPdf(pdfDoc).download('convertedByLax.pdf');
+    }
+  </script>
+</body>
+</html>
