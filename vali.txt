@@ -1,0 +1,120 @@
+Experiment No: 3
+Program : 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+* {
+box-sizing: border-box;
+}
+body {
+background-color: #f2f2f2;
+font-family: Arial, sans-serif;
+}
+.container {
+margin: 0 auto;
+max-width: 500px;
+padding: 20px;
+}
+form {
+background-color: #fff;
+border: 1px solid #ccc;
+border-radius: 5px;
+box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+padding: 20px;
+}
+form label {
+display: block;
+font-weight: bold;
+margin-bottom: 10px;
+}
+form input[type="text"],
+form input[type="email"],
+form input[type="tel"] {
+border: 1px solid #ccc;
+border-radius: 3px;
+display: block;
+font-size: 16px;
+padding: 10px;
+width: 100%;
+}
+form input[type="submit"] {
+background-color: #4CAF50;
+border: none;
+border-radius: 3px;
+color: #fff;
+cursor: pointer;
+font-size: 16px;
+margin-top: 10px;
+padding: 10px;
+width: 100%;
+}
+.error {
+color: red;
+font-size: 14px;
+margin-top: 5px;
+}
+.frm{
+margin: 50px 600px;
+}
+@media only screen and (max-width: 600px) {
+.container {
+max-width: 100%;
+}
+form input[type="submit"] {
+margin-top: 20px;
+}
+}
+</style>
+</head>
+<body>
+<div class="frm">
+<center> <h1>Form</h1> </center>
+<form onsubmit="return validateForm()">
+<label for="fname">First Name:</label>
+<input type="text" id="fname" name="fname"><br>
+<label for="lname">Last Name:</label>
+<input type="text" id="lname" name="lname"><br>
+<label for="email">Email:</label>
+<input type="email" id="email" name="email"><br>
+<label for="mobile">Mobile Number:</label>
+<input type="tel" id="mobile" name="mobile"><br>
+<span id="error-message" class="error"></span><br>
+<input type="submit" value="Submit">
+</form>
+</div>
+<script>
+function validateForm() {
+var fname = document.getElementById("fname").value;
+var lname = document.getElementById("lname").value;
+var email = document.getElementById("email").value;
+var mobile = document.getElementById("mobile").value;
+var errorMessage = document.getElementById("error-message");
+errorMessage.innerHTML = "";
+if (fname == "" || lname == "" || email == "" || mobile == "") {
+errorMessage.innerHTML = "All fields are required!";
+return false;
+}
+if (!/^[a-zA-Z]*$/g.test(fname) || !/^[a-zA-Z]*$/g.test(lname)) {
+errorMessage.innerHTML = "Name fields must contain only letters!";
+return false;
+}
+if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+.test(email)) {
+errorMessage.innerHTML = "Invalid email address!";
+return false;
+}
+if (!/^[7-9][0-9]{9}$/.test(mobile)) {
+errorMessage.innerHTML = "Invalid mobile number!";
+return false;
+}
+alert("Form Submitted Successfully!");
+return true;
+}
+</script>
+</body>
+</html>

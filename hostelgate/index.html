@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+</head>
+<body>
+    <h1>QR Code Scanner</h1>
+    <video id="qr-video" width="50%" autoplay></video>
+    <div id="result"></div>
+
+    <script src="https://cdn.rawgit.com/LazarSoft/jsqrcode/master/qrdecode.min.js"></script>
+    <script>
+        // Function to decode the QR code
+        function decodeQRCode() {
+            var video = document.getElementById('qr-video');
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            var code = jsQR(imageData.data, imageData.width, imageData.height);
+
+            if (code) {
+                document.querySelector('#result').textContent = 'Scanned QR Code: ' + code.data;
+            }
+
+            // Repeat the process for continuous scanning
+            requestAnimationFrame(decodeQRCode);
+        }
+
+        // Start the camera and scanning process
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                var video = document.getElementById('qr-video');
+                video.srcObject = stream;
+                video.play();
+
+                // Start the QR code decoding process
+                requestAnimationFrame(decodeQRCode);
+            })
+            .catch(function (error) {
+                console.error('Camera access denied:', error);
+            });
+    </script>
+</body>
+</html>
