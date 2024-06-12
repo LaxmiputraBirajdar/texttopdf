@@ -1,1 +1,49 @@
-i am the KING of the india 
+import ollama
+
+# Define the function to get completion using Phi3
+def get_completion_phi3(input):
+    # Prepare the executive summary prompt
+    summary_prompt = f"Please summarize the following project description into an executive summary:\n\n{input}\n\nExecutive Summary:"
+    
+    # Get the summary response
+    summary_response = ollama.chat(model="phi3", message=[{'role':'user', 'content': summary_prompt}])
+    executive_summary = summary_response['message']['content']
+    
+    # Prepare the classification system prompt
+    classification_system = """
+    You are an expert in classifying projects into specific pillars.
+    Here are the three main pillars of TechNova Solutions:
+
+    1. **Innovation and Creativity**
+    - Characteristics: Cutting-edge technology, experimentation, new ideas, unique solutions, R&D, AI, quantum computing, IoT, blockchain.
+    - Keywords: innovation, creativity, R&D, AI, quantum, IoT, blockchain.
+
+    2. **Customer-Centric Approach**
+    - Characteristics: Customer satisfaction, personalized solutions, customer feedback, support systems, CRM, analytics.
+    - Keywords: customer, personalized, support, CRM, feedback, satisfaction.
+
+    3. **Sustainability and Social Responsibility**
+    - Characteristics: Environmental impact, sustainability, eco-friendly, community engagement, renewable energy, ethical practices.
+    - Keywords: sustainability, eco-friendly, community, renewable energy, ethical, social responsibility.
+
+    Given the executive summary of a project, classify it into one of the above pillars.
+    """
+    
+    # Prepare the classification prompt
+    classification_prompt = f"#### System: {classification_system}\n#### User: \n{executive_summary}\n\n#### Response from Phi3:"
+    
+    # Get the classification response
+    classification_response = ollama.chat(model="phi3", message=[{'role':'user', 'content': classification_prompt}])
+    classification = classification_response['message']['content']
+    
+    return executive_summary, classification
+
+# Define the project description
+project_description = "OptiTrac Ocular Surveillance System: The project entails the development of a sophisticated software infrastructure aimed at augmenting employee productivity surveillance at XYZ Tech. Central to this system is the implementation of ocular presence detection via advanced oculographic tracking technologies. This process encompasses the utilization of high-fidelity computer vision algorithms coupled with deep learning paradigms, specifically leveraging convolutional neural networks (CNNs), to scrutinize real-time webcam data streams. The objective is to ascertain the presence and attentiveness of employees by analyzing minute ocular and facial micro-movements, thereby determining engagement levels during operational hours. The integration of these methodologies necessitates extensive training on voluminous annotated datasets to enhance accuracy and mitigate erroneous detections, ensuring a robust and seamless monitoring mechanism."
+
+# Get the completion using the Phi3 model
+executive_summary, classification = get_completion_phi3(project_description)
+
+# Print the results
+print("Executive Summary:", executive_summary)
+print("Classification:", classification)
